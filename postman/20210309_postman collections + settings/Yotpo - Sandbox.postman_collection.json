@@ -1,0 +1,1510 @@
+{
+  "info": {
+    "_postman_id": "cdd66d27-fb6a-4a97-aa90-421648b20acb",
+    "name": "Yotpo - Sandbox",
+    "description": "https://apidocs.yotpo.com/reference#create-mass-products",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Order - mass create",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**\r",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.\r",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.\r",
+                  " * As such, we recommend generating a new utoken for every API call.\r",
+                  " * \r",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication\r",
+                  " * \r",
+                  " * Sample - pre request script taken from \r",
+                  " * \r",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669\r",
+                  " */\r",
+                  "\r",
+                  "\r",
+                  "const OauthTokenRequest = {\r",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',\r",
+                  "  method: 'POST',\r",
+                  "  header: 'Content-Type:application/json',\r",
+                  "  body: {\r",
+                  "    mode: 'application/json',\r",
+                  "    raw: JSON.stringify(\r",
+                  "        {\r",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),\r",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),\r",
+                  "        \t//audience: pm.environment.get('my_audience'),\r",
+                  "        \tgrant_type:'client_credentials'\r",
+                  "        })\r",
+                  "  }\r",
+                  "};\r",
+                  "\r",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));\r",
+                  "\r",
+                  "\r",
+                  "\r",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {\r",
+                  "    console.log(err ? err : res.json());\r",
+                  "        if (err === null) {\r",
+                  "            const responseJson = res.json();\r",
+                  "            \r",
+                  "            console.log('Saving the Yotpo Bearer token');\r",
+                  "            console.log(JSON.stringify(responseJson,null,4));\r",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)\r",
+                  "        }\r",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "type": "text",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"platform\": \"general\",\n    \"startDate\": 20200427,\n    \"endDate\": 20200428,\n    \"utoken\": \"{{YOTPO_SANDBOX_BEARER_TOKEN}}\",\n    \"return_email_address\": \"{{YOTPO_SANDBOX_REQUEST_CONFIRMATION_EMAIL}}\",\n    \"result_callback_url\": \"https://cf6e51d8c6825c10d0a6e126d7bd2ffe.m.pipedream.net\",\n    \"orders\": []\n}"
+            },
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}apps/{{YOTPO_SANDBOX_APIKEY}}/purchases/mass_create?=",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}apps"],
+              "path": ["{{YOTPO_SANDBOX_APIKEY}}", "purchases", "mass_create"],
+              "query": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "\nhttps://api.yotpo.com/apps/:app_key/products/purchases\n\nhttps://apidocs.yotpo.com/reference#create-orders-within-the-yotpo-system"
+          },
+          "response": []
+        },
+        {
+          "name": "Order - mass delete",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**\r",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.\r",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.\r",
+                  " * As such, we recommend generating a new utoken for every API call.\r",
+                  " * \r",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication\r",
+                  " * \r",
+                  " * Sample - pre request script taken from \r",
+                  " * \r",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669\r",
+                  " */\r",
+                  "\r",
+                  "\r",
+                  "const OauthTokenRequest = {\r",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',\r",
+                  "  method: 'POST',\r",
+                  "  header: 'Content-Type:application/json',\r",
+                  "  body: {\r",
+                  "    mode: 'application/json',\r",
+                  "    raw: JSON.stringify(\r",
+                  "        {\r",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),\r",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),\r",
+                  "        \t//audience: pm.environment.get('my_audience'),\r",
+                  "        \tgrant_type:'client_credentials'\r",
+                  "        })\r",
+                  "  }\r",
+                  "};\r",
+                  "\r",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));\r",
+                  "\r",
+                  "\r",
+                  "\r",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {\r",
+                  "    console.log(err ? err : res.json());\r",
+                  "        if (err === null) {\r",
+                  "            const responseJson = res.json();\r",
+                  "            \r",
+                  "            console.log('Saving the Yotpo Bearer token');\r",
+                  "            console.log(JSON.stringify(responseJson,null,4));\r",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)\r",
+                  "        }\r",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "type": "text",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"platform\": \"general\",\n    \"startDate\": 20200427,\n    \"endDate\": 20200428,\n    \"utoken\": \"{{YOTPO_SANDBOX_BEARER_TOKEN}}\",\n    \"result_callback_url\": \"https://cf6e51d8c6825c10d0a6e126d7bd2ffe.m.pipedream.net\",\n    \"return_email_address\": \"{{YOTPO_SANDBOX_REQUEST_CONFIRMATION_EMAIL}}\",\n    \"orders\": []\n}"
+            },
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}apps/{{YOTPO_SANDBOX_APIKEY}}/purchases/mass_create?=",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}apps"],
+              "path": ["{{YOTPO_SANDBOX_APIKEY}}", "purchases", "mass_create"],
+              "query": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "\nhttps://api.yotpo.com/apps/:app_key/products/mass_create\n\nhttps://apidocs.yotpo.com/reference#create-mass-products"
+          },
+          "response": []
+        },
+        {
+          "name": "retrieve purchases/orders",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**\r",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.\r",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.\r",
+                  " * As such, we recommend generating a new utoken for every API call.\r",
+                  " * \r",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication\r",
+                  " * \r",
+                  " * Sample - pre request script taken from \r",
+                  " * \r",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669\r",
+                  " */\r",
+                  "\r",
+                  "\r",
+                  "const OauthTokenRequest = {\r",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',\r",
+                  "  method: 'POST',\r",
+                  "  header: 'Content-Type:application/json',\r",
+                  "  body: {\r",
+                  "    mode: 'application/json',\r",
+                  "    raw: JSON.stringify(\r",
+                  "        {\r",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),\r",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),\r",
+                  "        \t//audience: pm.environment.get('my_audience'),\r",
+                  "        \tgrant_type:'client_credentials'\r",
+                  "        })\r",
+                  "  }\r",
+                  "};\r",
+                  "\r",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));\r",
+                  "\r",
+                  "\r",
+                  "\r",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {\r",
+                  "    console.log(err ? err : res.json());\r",
+                  "        if (err === null) {\r",
+                  "            const responseJson = res.json();\r",
+                  "            \r",
+                  "            console.log('Saving the Yotpo Bearer token');\r",
+                  "            console.log(JSON.stringify(responseJson,null,4));\r",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)\r",
+                  "        }\r",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "type": "text",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}apps/{{YOTPO_SANDBOX_APIKEY}}/purchases?utoken={{YOTPO_SANDBOX_BEARER_TOKEN}}&count=1000",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}apps"],
+              "path": ["{{YOTPO_SANDBOX_APIKEY}}", "purchases"],
+              "query": [
+                {
+                  "key": "utoken",
+                  "value": "{{YOTPO_SANDBOX_BEARER_TOKEN}}"
+                },
+                {
+                  "key": "count",
+                  "value": "1000"
+                }
+              ]
+            },
+            "description": "\nhttps://api.yotpo.com/apps/app_key/purchases?utoken=:token\n\n\nhttps://apidocs.yotpo.com/reference#retrieve-orders-from-the-yotpo-system"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Product - mass create",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**\r",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.\r",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.\r",
+                  " * As such, we recommend generating a new utoken for every API call.\r",
+                  " * \r",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication\r",
+                  " * \r",
+                  " * Sample - pre request script taken from \r",
+                  " * \r",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669\r",
+                  " */\r",
+                  "\r",
+                  "\r",
+                  "const OauthTokenRequest = {\r",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',\r",
+                  "  method: 'POST',\r",
+                  "  header: 'Content-Type:application/json',\r",
+                  "  body: {\r",
+                  "    mode: 'application/json',\r",
+                  "    raw: JSON.stringify(\r",
+                  "        {\r",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),\r",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),\r",
+                  "        \t//audience: pm.environment.get('my_audience'),\r",
+                  "        \tgrant_type:'client_credentials'\r",
+                  "        })\r",
+                  "  }\r",
+                  "};\r",
+                  "\r",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));\r",
+                  "\r",
+                  "\r",
+                  "\r",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {\r",
+                  "    console.log(err ? err : res.json());\r",
+                  "        if (err === null) {\r",
+                  "            const responseJson = res.json();\r",
+                  "            \r",
+                  "            console.log('Saving the Yotpo Bearer token');\r",
+                  "            console.log(JSON.stringify(responseJson,null,4));\r",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)\r",
+                  "        }\r",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "type": "text",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"utoken\": \"{{YOTPO_SANDBOX_BEARER_TOKEN}}\",\n    \"return_email_address\": \"{{YOTPO_SANDBOX_REQUEST_CONFIRMATION_EMAIL}}\",\n    \"products\": {\n        \"3920172\": {\n            \"name\": \"8R Standard Lab Spatula, Rigid Wood\",\n            \"url\": \"https://www.example.com/catalog/instruments/miscellaneous-operative-instruments/hu-friedy-lab-instruments\",\n            \"currency\": \"USD\",\n            \"price\": 36.95,\n            \"group_name\": \"ejuej\",\n            \"image_url\": \"https://www.example.com/photos/products/small/EJUEJ.a253a4208b916e26da5995e18e6550bc.jpg\",\n            \"specs\": {\n                \"brand\": \"Hu-Friedy\",\n                \"upc\": \"\",\n                \"mpn\": \"LS8R\"\n            },\n            \"description\": \"\"\n        }\n    }\n}"
+            },
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}apps/{{YOTPO_SANDBOX_APIKEY}}/products/mass_create?",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}apps"],
+              "path": ["{{YOTPO_SANDBOX_APIKEY}}", "products", "mass_create"],
+              "query": [
+                {
+                  "key": "",
+                  "value": null
+                }
+              ]
+            },
+            "description": "\nhttps://api.yotpo.com/apps/:app_key/products/mass_create\n\nhttps://apidocs.yotpo.com/reference#create-mass-products"
+          },
+          "response": []
+        },
+        {
+          "name": "Product - mass update",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**\r",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.\r",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.\r",
+                  " * As such, we recommend generating a new utoken for every API call.\r",
+                  " * \r",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication\r",
+                  " * \r",
+                  " * Sample - pre request script taken from \r",
+                  " * \r",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669\r",
+                  " */\r",
+                  "\r",
+                  "\r",
+                  "const OauthTokenRequest = {\r",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',\r",
+                  "  method: 'POST',\r",
+                  "  header: 'Content-Type:application/json',\r",
+                  "  body: {\r",
+                  "    mode: 'application/json',\r",
+                  "    raw: JSON.stringify(\r",
+                  "        {\r",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),\r",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),\r",
+                  "        \t//audience: pm.environment.get('my_audience'),\r",
+                  "        \tgrant_type:'client_credentials'\r",
+                  "        })\r",
+                  "  }\r",
+                  "};\r",
+                  "\r",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));\r",
+                  "\r",
+                  "\r",
+                  "\r",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {\r",
+                  "    console.log(err ? err : res.json());\r",
+                  "        if (err === null) {\r",
+                  "            const responseJson = res.json();\r",
+                  "            \r",
+                  "            console.log('Saving the Yotpo Bearer token');\r",
+                  "            console.log(JSON.stringify(responseJson,null,4));\r",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)\r",
+                  "        }\r",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "type": "text",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"utoken\": \"{{YOTPO_SANDBOX_BEARER_TOKEN}}\",\n    \"return_email_address\": \"{{YOTPO_SANDBOX_REQUEST_CONFIRMATION_EMAIL}}\",\n    \"products\": {\n        \"3920172\": {\n            \"name\": \"8R Standard Lab Spatula, Rigid Wood\",\n            \"url\": \"https://www.example.com/catalog/instruments/miscellaneous-operative-instruments/hu-friedy-lab-instruments\",\n            \"currency\": \"USD\",\n            \"price\": 36.95,\n            \"group_name\": \"ejuej\",\n            \"image_url\": \"https://www.example.com/photos/products/small/EJUEJ.a253a4208b916e26da5995e18e6550bc.jpg\",\n            \"specs\": {\n                \"brand\": \"Hu-Friedy\",\n                \"upc\": \"\",\n                \"mpn\": \"LS8R\"\n            },\n            \"description\": \"\"\n        }\n    }\n}"
+            },
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}apps/{{YOTPO_SANDBOX_APIKEY}}/products/mass_update/",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}apps"],
+              "path": [
+                "{{YOTPO_SANDBOX_APIKEY}}",
+                "products",
+                "mass_update",
+                ""
+              ]
+            },
+            "description": "\nhttps://api.yotpo.com/apps/:app_key/products/mass_update\n\nhttps://apidocs.yotpo.com/reference#update-mass-products\n\n"
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve all product details",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.",
+                  " * As such, we recommend generating a new utoken for every API call.",
+                  " * ",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication",
+                  " * ",
+                  " * Sample - pre request script taken from ",
+                  " * ",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669",
+                  " */",
+                  "",
+                  "",
+                  "const OauthTokenRequest = {",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',",
+                  "  method: 'POST',",
+                  "  header: 'Content-Type:application/json',",
+                  "  body: {",
+                  "    mode: 'application/json',",
+                  "    raw: JSON.stringify(",
+                  "        {",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),",
+                  "        \t//audience: pm.environment.get('my_audience'),",
+                  "        \tgrant_type:'client_credentials'",
+                  "        })",
+                  "  }",
+                  "};",
+                  "",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));",
+                  "",
+                  "",
+                  "",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {",
+                  "    console.log(err ? err : res.json());",
+                  "        if (err === null) {",
+                  "            const responseJson = res.json();",
+                  "            ",
+                  "            console.log('Saving the Yotpo Bearer token');",
+                  "            console.log(JSON.stringify(responseJson,null,4));",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)",
+                  "        }",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}/v1/apps/{{YOTPO_SANDBOX_APIKEY}}/products?utoken={{YOTPO_SANDBOX_BEARER_TOKEN}}&count=10",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}"],
+              "path": ["v1", "apps", "{{YOTPO_SANDBOX_APIKEY}}", "products"],
+              "query": [
+                {
+                  "key": "utoken",
+                  "value": "{{YOTPO_SANDBOX_BEARER_TOKEN}}"
+                },
+                {
+                  "key": "count",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve specific product details",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.",
+                  " * As such, we recommend generating a new utoken for every API call.",
+                  " * ",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication",
+                  " * ",
+                  " * Sample - pre request script taken from ",
+                  " * ",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669",
+                  " */",
+                  "",
+                  "",
+                  "const OauthTokenRequest = {",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',",
+                  "  method: 'POST',",
+                  "  header: 'Content-Type:application/json',",
+                  "  body: {",
+                  "    mode: 'application/json',",
+                  "    raw: JSON.stringify(",
+                  "        {",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),",
+                  "        \t//audience: pm.environment.get('my_audience'),",
+                  "        \tgrant_type:'client_credentials'",
+                  "        })",
+                  "  }",
+                  "};",
+                  "",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));",
+                  "",
+                  "",
+                  "",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {",
+                  "    console.log(err ? err : res.json());",
+                  "        if (err === null) {",
+                  "            const responseJson = res.json();",
+                  "            ",
+                  "            console.log('Saving the Yotpo Bearer token');",
+                  "            console.log(JSON.stringify(responseJson,null,4));",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)",
+                  "        }",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}/v1/apps/{{YOTPO_SANDBOX_APIKEY}}/products/3020405?utoken={{YOTPO_SANDBOX_BEARER_TOKEN}}&count=10",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}"],
+              "path": [
+                "v1",
+                "apps",
+                "{{YOTPO_SANDBOX_APIKEY}}",
+                "products",
+                "3020405"
+              ],
+              "query": [
+                {
+                  "key": "utoken",
+                  "value": "{{YOTPO_SANDBOX_BEARER_TOKEN}}"
+                },
+                {
+                  "key": "count",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "retrieve all products(image info)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**\r",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.\r",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.\r",
+                  " * As such, we recommend generating a new utoken for every API call.\r",
+                  " * \r",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication\r",
+                  " * \r",
+                  " * Sample - pre request script taken from \r",
+                  " * \r",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669\r",
+                  " */\r",
+                  "\r",
+                  "\r",
+                  "const OauthTokenRequest = {\r",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',\r",
+                  "  method: 'POST',\r",
+                  "  header: 'Content-Type:application/json',\r",
+                  "  body: {\r",
+                  "    mode: 'application/json',\r",
+                  "    raw: JSON.stringify(\r",
+                  "        {\r",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),\r",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),\r",
+                  "        \t//audience: pm.environment.get('my_audience'),\r",
+                  "        \tgrant_type:'client_credentials'\r",
+                  "        })\r",
+                  "  }\r",
+                  "};\r",
+                  "\r",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));\r",
+                  "\r",
+                  "\r",
+                  "\r",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {\r",
+                  "    console.log(err ? err : res.json());\r",
+                  "        if (err === null) {\r",
+                  "            const responseJson = res.json();\r",
+                  "            \r",
+                  "            console.log('Saving the Yotpo Bearer token');\r",
+                  "            console.log(JSON.stringify(responseJson,null,4));\r",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)\r",
+                  "        }\r",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "type": "text",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}apps/{{YOTPO_SANDBOX_APIKEY}}/products?utoken={{YOTPO_SANDBOX_BEARER_TOKEN}}&count=1000",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}apps"],
+              "path": ["{{YOTPO_SANDBOX_APIKEY}}", "products"],
+              "query": [
+                {
+                  "key": "utoken",
+                  "value": "{{YOTPO_SANDBOX_BEARER_TOKEN}}"
+                },
+                {
+                  "key": "count",
+                  "value": "1000"
+                }
+              ]
+            },
+            "description": "\nhttps://api.yotpo.com/apps/app_key/purchases?utoken=:token\n\n\nhttps://apidocs.yotpo.com/reference#retrieve-orders-from-the-yotpo-system"
+          },
+          "response": []
+        },
+        {
+          "name": "retrieve all products - batch - staticw2.yotpo",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**\r",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.\r",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.\r",
+                  " * As such, we recommend generating a new utoken for every API call.\r",
+                  " * \r",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication\r",
+                  " * \r",
+                  " * Sample - pre request script taken from \r",
+                  " * \r",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669\r",
+                  " */\r",
+                  "\r",
+                  "\r",
+                  "const OauthTokenRequest = {\r",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',\r",
+                  "  method: 'POST',\r",
+                  "  header: 'Content-Type:application/json',\r",
+                  "  body: {\r",
+                  "    mode: 'application/json',\r",
+                  "    raw: JSON.stringify(\r",
+                  "        {\r",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),\r",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),\r",
+                  "        \t//audience: pm.environment.get('my_audience'),\r",
+                  "        \tgrant_type:'client_credentials'\r",
+                  "        })\r",
+                  "  }\r",
+                  "};\r",
+                  "\r",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));\r",
+                  "\r",
+                  "\r",
+                  "\r",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {\r",
+                  "    console.log(err ? err : res.json());\r",
+                  "        if (err === null) {\r",
+                  "            const responseJson = res.json();\r",
+                  "            \r",
+                  "            console.log('Saving the Yotpo Bearer token');\r",
+                  "            console.log(JSON.stringify(responseJson,null,4));\r",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)\r",
+                  "        }\r",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "type": "text",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"methods\": [\n        {\n            \"method\": \"main_widget\",\n            \"params\": {\n                \"pid\": \"4680714\"\n            }\n        },\n        {\n            \"method\": \"bottomline\",\n            \"params\": {\n                \"pid\": \"4680714\"\n            },\n            \"format\": \"json\"\n        }\n    ],\n    \"app_key\": \"{{YOTPO_SANDBOX_APIKEY}}\"\n}"
+            },
+            "url": {
+              "raw": "http://staticw2.yotpo.com/batch?=",
+              "protocol": "http",
+              "host": ["staticw2", "yotpo", "com"],
+              "path": ["batch"],
+              "query": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "\nhttps://api.yotpo.com/apps/app_key/purchases?utoken=:token\n\n\nhttps://apidocs.yotpo.com/reference#retrieve-orders-from-the-yotpo-system"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Group",
+      "item": [
+        {
+          "name": "Retrieve product group details",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.",
+                  " * As such, we recommend generating a new utoken for every API call.",
+                  " * ",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication",
+                  " * ",
+                  " * Sample - pre request script taken from ",
+                  " * ",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669",
+                  " */",
+                  "",
+                  "",
+                  "const OauthTokenRequest = {",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',",
+                  "  method: 'POST',",
+                  "  header: 'Content-Type:application/json',",
+                  "  body: {",
+                  "    mode: 'application/json',",
+                  "    raw: JSON.stringify(",
+                  "        {",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),",
+                  "        \t//audience: pm.environment.get('my_audience'),",
+                  "        \tgrant_type:'client_credentials'",
+                  "        })",
+                  "  }",
+                  "};",
+                  "",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));",
+                  "",
+                  "",
+                  "",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {",
+                  "    console.log(err ? err : res.json());",
+                  "        if (err === null) {",
+                  "            const responseJson = res.json();",
+                  "            ",
+                  "            console.log('Saving the Yotpo Bearer token');",
+                  "            console.log(JSON.stringify(responseJson,null,4));",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)",
+                  "        }",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}/v1/apps/{{YOTPO_SANDBOX_APIKEY}}/products_groups?utoken={{YOTPO_SANDBOX_BEARER_TOKEN}}&count=10",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}"],
+              "path": [
+                "v1",
+                "apps",
+                "{{YOTPO_SANDBOX_APIKEY}}",
+                "products_groups"
+              ],
+              "query": [
+                {
+                  "key": "utoken",
+                  "value": "{{YOTPO_SANDBOX_BEARER_TOKEN}}"
+                },
+                {
+                  "key": "count",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve specific group",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.",
+                  " * As such, we recommend generating a new utoken for every API call.",
+                  " * ",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication",
+                  " * ",
+                  " * Sample - pre request script taken from ",
+                  " * ",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669",
+                  " */",
+                  "",
+                  "",
+                  "const OauthTokenRequest = {",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',",
+                  "  method: 'POST',",
+                  "  header: 'Content-Type:application/json',",
+                  "  body: {",
+                  "    mode: 'application/json',",
+                  "    raw: JSON.stringify(",
+                  "        {",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),",
+                  "        \t//audience: pm.environment.get('my_audience'),",
+                  "        \tgrant_type:'client_credentials'",
+                  "        })",
+                  "  }",
+                  "};",
+                  "",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));",
+                  "",
+                  "",
+                  "",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {",
+                  "    console.log(err ? err : res.json());",
+                  "        if (err === null) {",
+                  "            const responseJson = res.json();",
+                  "            ",
+                  "            console.log('Saving the Yotpo Bearer token');",
+                  "            console.log(JSON.stringify(responseJson,null,4));",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)",
+                  "        }",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}/v1/apps/{{YOTPO_SANDBOX_APIKEY}}/products_groups/ttpsf?utoken={{YOTPO_SANDBOX_BEARER_TOKEN}}&count=10",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}"],
+              "path": [
+                "v1",
+                "apps",
+                "{{YOTPO_SANDBOX_APIKEY}}",
+                "products_groups",
+                "ttpsf"
+              ],
+              "query": [
+                {
+                  "key": "utoken",
+                  "value": "{{YOTPO_SANDBOX_BEARER_TOKEN}}"
+                },
+                {
+                  "key": "count",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "ttps://api.yotpo.com/v1/apps/YOUR_APP_KEY/products_groups?utoken=YOUR_UTOKEN"
+    },
+    {
+      "name": "Review",
+      "item": [
+        {
+          "name": "Retrieve All Reviews",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.",
+                  " * As such, we recommend generating a new utoken for every API call.",
+                  " * ",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication",
+                  " * ",
+                  " * Sample - pre request script taken from ",
+                  " * ",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669",
+                  " */",
+                  "",
+                  "",
+                  "const OauthTokenRequest = {",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',",
+                  "  method: 'POST',",
+                  "  header: 'Content-Type:application/json',",
+                  "  body: {",
+                  "    mode: 'application/json',",
+                  "    raw: JSON.stringify(",
+                  "        {",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),",
+                  "        \t//audience: pm.environment.get('my_audience'),",
+                  "        \tgrant_type:'client_credentials'",
+                  "        })",
+                  "  }",
+                  "};",
+                  "",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));",
+                  "",
+                  "",
+                  "",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {",
+                  "    console.log(err ? err : res.json());",
+                  "        if (err === null) {",
+                  "            const responseJson = res.json();",
+                  "            ",
+                  "            console.log('Saving the Yotpo Bearer token');",
+                  "            console.log(JSON.stringify(responseJson,null,4));",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)",
+                  "        }",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}/v1/apps/{{YOTPO_SANDBOX_APIKEY}}/reviews?utoken={{YOTPO_SANDBOX_BEARER_TOKEN}}&count=10",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}"],
+              "path": ["v1", "apps", "{{YOTPO_SANDBOX_APIKEY}}", "reviews"],
+              "query": [
+                {
+                  "key": "utoken",
+                  "value": "{{YOTPO_SANDBOX_BEARER_TOKEN}}"
+                },
+                {
+                  "key": "count",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve Reviews for a Product",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.",
+                  " * As such, we recommend generating a new utoken for every API call.",
+                  " * ",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication",
+                  " * ",
+                  " * Sample - pre request script taken from ",
+                  " * ",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669",
+                  " */",
+                  "",
+                  "",
+                  "const OauthTokenRequest = {",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',",
+                  "  method: 'POST',",
+                  "  header: 'Content-Type:application/json',",
+                  "  body: {",
+                  "    mode: 'application/json',",
+                  "    raw: JSON.stringify(",
+                  "        {",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),",
+                  "        \t//audience: pm.environment.get('my_audience'),",
+                  "        \tgrant_type:'client_credentials'",
+                  "        })",
+                  "  }",
+                  "};",
+                  "",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));",
+                  "",
+                  "",
+                  "",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {",
+                  "    console.log(err ? err : res.json());",
+                  "        if (err === null) {",
+                  "            const responseJson = res.json();",
+                  "            ",
+                  "            console.log('Saving the Yotpo Bearer token');",
+                  "            console.log(JSON.stringify(responseJson,null,4));",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)",
+                  "        }",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}/v1/widget/{{YOTPO_SANDBOX_APIKEY}}/products/5620100/reviews.json",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}"],
+              "path": [
+                "v1",
+                "widget",
+                "{{YOTPO_SANDBOX_APIKEY}}",
+                "products",
+                "5620100",
+                "reviews.json"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve Widget Site Reviews",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.",
+                  " * As such, we recommend generating a new utoken for every API call.",
+                  " * ",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication",
+                  " * ",
+                  " * Sample - pre request script taken from ",
+                  " * ",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669",
+                  " */",
+                  "",
+                  "",
+                  "const OauthTokenRequest = {",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',",
+                  "  method: 'POST',",
+                  "  header: 'Content-Type:application/json',",
+                  "  body: {",
+                  "    mode: 'application/json',",
+                  "    raw: JSON.stringify(",
+                  "        {",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),",
+                  "        \t//audience: pm.environment.get('my_audience'),",
+                  "        \tgrant_type:'client_credentials'",
+                  "        })",
+                  "  }",
+                  "};",
+                  "",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));",
+                  "",
+                  "",
+                  "",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {",
+                  "    console.log(err ? err : res.json());",
+                  "        if (err === null) {",
+                  "            const responseJson = res.json();",
+                  "            ",
+                  "            console.log('Saving the Yotpo Bearer token');",
+                  "            console.log(JSON.stringify(responseJson,null,4));",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)",
+                  "        }",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}/v1/widget/{{YOTPO_SANDBOX_APIKEY}}/products/yotpo_site_reviews/reviews.json?per_page=3&page=1",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}"],
+              "path": [
+                "v1",
+                "widget",
+                "{{YOTPO_SANDBOX_APIKEY}}",
+                "products",
+                "yotpo_site_reviews",
+                "reviews.json"
+              ],
+              "query": [
+                {
+                  "key": "per_page",
+                  "value": "3"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Bottomline - all products (tot rev + avg scores)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**\r",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.\r",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.\r",
+                  " * As such, we recommend generating a new utoken for every API call.\r",
+                  " * \r",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication\r",
+                  " * \r",
+                  " * Sample - pre request script taken from \r",
+                  " * \r",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669\r",
+                  " */\r",
+                  "\r",
+                  "\r",
+                  "const OauthTokenRequest = {\r",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',\r",
+                  "  method: 'POST',\r",
+                  "  header: 'Content-Type:application/json',\r",
+                  "  body: {\r",
+                  "    mode: 'application/json',\r",
+                  "    raw: JSON.stringify(\r",
+                  "        {\r",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),\r",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),\r",
+                  "        \t//audience: pm.environment.get('my_audience'),\r",
+                  "        \tgrant_type:'client_credentials'\r",
+                  "        })\r",
+                  "  }\r",
+                  "};\r",
+                  "\r",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));\r",
+                  "\r",
+                  "\r",
+                  "\r",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {\r",
+                  "    console.log(err ? err : res.json());\r",
+                  "        if (err === null) {\r",
+                  "            const responseJson = res.json();\r",
+                  "            \r",
+                  "            console.log('Saving the Yotpo Bearer token');\r",
+                  "            console.log(JSON.stringify(responseJson,null,4));\r",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)\r",
+                  "        }\r",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "type": "text",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}/v1/apps/{{YOTPO_SANDBOX_APIKEY}}/bottom_lines?count=100&page=1",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}"],
+              "path": [
+                "v1",
+                "apps",
+                "{{YOTPO_SANDBOX_APIKEY}}",
+                "bottom_lines"
+              ],
+              "query": [
+                {
+                  "key": "count",
+                  "value": "100"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "https://apidocs.yotpo.com/reference#v1-retrieve-bottom-line-total-reviews-and-average-score-for-all-products"
+          },
+          "response": []
+        },
+        {
+          "name": "Bottomline - specific product",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**\r",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.\r",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.\r",
+                  " * As such, we recommend generating a new utoken for every API call.\r",
+                  " * \r",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication\r",
+                  " * \r",
+                  " * Sample - pre request script taken from \r",
+                  " * \r",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669\r",
+                  " */\r",
+                  "\r",
+                  "\r",
+                  "const OauthTokenRequest = {\r",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',\r",
+                  "  method: 'POST',\r",
+                  "  header: 'Content-Type:application/json',\r",
+                  "  body: {\r",
+                  "    mode: 'application/json',\r",
+                  "    raw: JSON.stringify(\r",
+                  "        {\r",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),\r",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),\r",
+                  "        \t//audience: pm.environment.get('my_audience'),\r",
+                  "        \tgrant_type:'client_credentials'\r",
+                  "        })\r",
+                  "  }\r",
+                  "};\r",
+                  "\r",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));\r",
+                  "\r",
+                  "\r",
+                  "\r",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {\r",
+                  "    console.log(err ? err : res.json());\r",
+                  "        if (err === null) {\r",
+                  "            const responseJson = res.json();\r",
+                  "            \r",
+                  "            console.log('Saving the Yotpo Bearer token');\r",
+                  "            console.log(JSON.stringify(responseJson,null,4));\r",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)\r",
+                  "        }\r",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "type": "text",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"platform\": \"general\",\n    \"utoken\": \"{{YOTPO_SANDBOX_BEARER_TOKEN}}\",\n    \"return_email_address\": \"{{YOTPO_SANDBOX_REQUEST_CONFIRMATION_EMAIL}}\",\n    \"result_callback_url\": \"\",\n    \"products\": []\n}"
+            },
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}products/{{YOTPO_SANDBOX_APIKEY}}/1020001/bottomline?=",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}products"],
+              "path": ["{{YOTPO_SANDBOX_APIKEY}}", "1020001", "bottomline"],
+              "query": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "\nhttps://api.yotpo.com/apps/:app_key/products/mass_create\n\nhttps://apidocs.yotpo.com/reference#create-mass-products"
+          },
+          "response": []
+        },
+        {
+          "name": "yotpo_site_reviews/bottomline",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "/**\r",
+                  " * Yotpo Authentication This endpoint uses your Yotpo API Key and API Secret to generate the API utoken necessary to authenticate most of Yotpo's API calls.\r",
+                  " * Note that utokens are invalidated upon logging out of the Yotpo system.\r",
+                  " * As such, we recommend generating a new utoken for every API call.\r",
+                  " * \r",
+                  " * https://apidocs.yotpo.com/reference#yotpo-authentication\r",
+                  " * \r",
+                  " * Sample - pre request script taken from \r",
+                  " * \r",
+                  " * https://gist.github.com/bcnzer/073f0fc0b959928b0ca2b173230c0669\r",
+                  " */\r",
+                  "\r",
+                  "\r",
+                  "const OauthTokenRequest = {\r",
+                  "  url: pm.environment.get('YOTPO_SANDBOX_API_ROOT_URL') + 'oauth/token',\r",
+                  "  method: 'POST',\r",
+                  "  header: 'Content-Type:application/json',\r",
+                  "  body: {\r",
+                  "    mode: 'application/json',\r",
+                  "    raw: JSON.stringify(\r",
+                  "        {\r",
+                  "        \tclient_id: pm.environment.get('YOTPO_SANDBOX_APIKEY'),\r",
+                  "        \tclient_secret: pm.environment.get('YOTPO_SANDBOX_APISECRET'),\r",
+                  "        \t//audience: pm.environment.get('my_audience'),\r",
+                  "        \tgrant_type:'client_credentials'\r",
+                  "        })\r",
+                  "  }\r",
+                  "};\r",
+                  "\r",
+                  "console.log(\"OauthTokenRequest:\\n\\n\",JSON.stringify(OauthTokenRequest,null,4));\r",
+                  "\r",
+                  "\r",
+                  "\r",
+                  "pm.sendRequest(OauthTokenRequest, function (err, res) {\r",
+                  "    console.log(err ? err : res.json());\r",
+                  "        if (err === null) {\r",
+                  "            const responseJson = res.json();\r",
+                  "            \r",
+                  "            console.log('Saving the Yotpo Bearer token');\r",
+                  "            console.log(JSON.stringify(responseJson,null,4));\r",
+                  "            pm.environment.set('YOTPO_SANDBOX_BEARER_TOKEN', responseJson.access_token)\r",
+                  "        }\r",
+                  "    });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "type": "text",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"platform\": \"general\",\n    \"utoken\": \"{{YOTPO_SANDBOX_BEARER_TOKEN}}\",\n    \"return_email_address\": \"{{YOTPO_SANDBOX_REQUEST_CONFIRMATION_EMAIL}}\",\n    \"result_callback_url\": \"\",\n    \"products\": []\n}"
+            },
+            "url": {
+              "raw": "{{YOTPO_SANDBOX_API_ROOT_URL}}products/{{YOTPO_SANDBOX_APIKEY}}/yotpo_site_reviews/bottomline?=",
+              "host": ["{{YOTPO_SANDBOX_API_ROOT_URL}}products"],
+              "path": [
+                "{{YOTPO_SANDBOX_APIKEY}}",
+                "yotpo_site_reviews",
+                "bottomline"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "\nhttps://api.yotpo.com/apps/:app_key/products/mass_create\n\nhttps://apidocs.yotpo.com/reference#create-mass-products"
+          },
+          "response": []
+        },
+        {
+          "name": "brooklinen",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ]
+}

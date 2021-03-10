@@ -1,0 +1,36 @@
+{
+	"info": {
+		"_postman_id": "eac10074-b8f4-4a92-a38f-d0bc40f2efa6",
+		"name": "pipedream-webhook",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "pipedream.com",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"moya\":\"testing\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://cf6e51d8c6825c10d0a6e126d7bd2ffe.m.pipedream.net",
+					"protocol": "https",
+					"host": [
+						"cf6e51d8c6825c10d0a6e126d7bd2ffe",
+						"m",
+						"pipedream",
+						"net"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

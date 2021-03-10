@@ -1,0 +1,23 @@
+{
+  "name": "@moyarich/test-yotpo",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "DOTENV_CONFIG_PATH=../.env.sandbox mocha -r dotenv/config --timeout 8000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "node-fetch": "^2.6.0",
+    "chai": "^4.2.0",
+    "fetch-mock": "^9.4.0",
+    "mocha": "^7.1.1",
+    "mockery": "^2.1.0",
+    "dotenv": "^8.2.0"
+  },
+  "dependencies": {
+    "@moyarich/yotpo": "*"
+  }
+}

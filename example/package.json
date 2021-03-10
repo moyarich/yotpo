@@ -1,0 +1,16 @@
+{
+  "name": "@moyarich/example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "DOTENV_CONFIG_PATH=../.env node -r dotenv/config index.js",
+    "test": "DOTENV_CONFIG_PATH=../.env mocha -r dotenv/config --timeout 8000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@moyarich/yotpo": "*"
+  }
+}

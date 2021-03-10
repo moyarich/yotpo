@@ -1,0 +1,16 @@
+{
+  "name": "@moyarich/YotpoProject",
+  "private": true,
+  "version": "0.0.1",
+  "workspaces": [
+    "test",
+    "yotpoReviews",
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "DOTENV_CONFIG_PATH=.env.sandbox mocha -r dotenv/config --timeout 8000"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
+}

@@ -1,0 +1,14 @@
+# Environmental variables
+credentials are stored in the file **.env**
+
+Note : "@moyarich/yotpo" does not use environment files
+
+# "@moyarich/example" credentials stored in the file .env
+
+YOTPO_APIKEY=ExamplegpDgnbqEa0fjhUh1U8Av3w01jz0rSbUJ5Ykq
+YOTPO_APISECRET=ExampleMd1wlvLhFkYM2ZKYDotQRY6ur8inWpobZ0eG
+YOTPO_RETURN_EMAIL_ADDRESS = email@example.com
+
+
+# For Example/Testing Only -  In production this should be a public url. Can be protected with JSON Web Token(JWT)
+YOTPO_PRODUCT_WEBHOOKURL=https://envuzoabo0440hk.m.pipedream.net
