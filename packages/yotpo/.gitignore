@@ -1,0 +1,16 @@
+# Dependency directories
+node_modules
+
+# Logs
+logs
+*.log
+
+
+
+#folders/files
+.DS_Store
+package-lock.json
+.env
+.env.override
+
++trash
